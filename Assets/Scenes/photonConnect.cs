@@ -5,7 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using Photon.Voice.Unity;
 using UnityEngine.UI;
-
+//using Photon.Voice.Unity.UtilityScripts;
 /* this project is under devloping but you use push to talk feature for this project,
  * i am student i do not use for com. perpose.
  * without editer setup this script not usefull for you.
@@ -21,6 +21,7 @@ public class photonConnect : MonoBehaviourPunCallbacks
 
     private VoiceConnection voiceConnection;
     [SerializeField] private AudioClip audioClipLocal;
+    //public SaveOutgoingStreamToFile saveIncoming;
 
     private void Awake()
     {
@@ -97,6 +98,7 @@ public class photonConnect : MonoBehaviourPunCallbacks
         
         //stop transmit 
         recorder.TransmitEnabled = false;
+
     }
 
 
@@ -106,6 +108,48 @@ public class photonConnect : MonoBehaviourPunCallbacks
     /// </summary>
     public void btn_playerSound()
     {
-        GetComponent<AudioSource>().PlayOneShot(audioClipLocal);
+        //GetComponent<AudioSource>().PlayOneShot(audioClipLocal);
+
+        //SaveIncomingStreamToFile saveIncomingStreamToFile = new SaveIncomingStreamToFile;        
     }
+
+
+
+    //public void SaveAudioStream()
+    //{
+
+    //    string filename = "TestWavFile";
+
+    //    if (!filename.ToLower().EndsWith(".wav"))
+    //    {
+    //        filename += ".wav";
+    //    }
+
+    //    //var filepath = filename;
+    //    var filepath = Path.Combine(Application.persistentDataPath, filename);
+
+    //    Debug.Log("*** Filepath: " + filepath);
+
+
+    //    // Make sure directory exists
+    //    Directory.CreateDirectory(Path.GetDirectoryName(filepath));
+
+
+    //    FileStream writeStream = new FileStream(filepath, FileMode.Create, FileAccess.Write);
+    //    PhotonVoiceNetwork.Client.OnAudioFrameAction += (playerId, voiceId, frame) => Debug.LogFormat("***** {0} {1} {2}", playerId, voiceId, frame[0]);
+
+    //    //I need to feed the MemoryStream buffer with the Audio data returned from PhotonVoiceNetwork.Client.OnAudioFrameAction
+    //    MemoryStream memstrm = new MemoryStream();
+
+    //    int Length = 256;
+    //    Byte[] buffer = new Byte[Length];
+    //    int bytesRead = memstrm.Read(buffer, 0, Length);
+    //    // write the required bytes
+    //    while (bytesRead > 0)
+    //    {
+    //        writeStream.Write(buffer, 0, bytesRead);
+    //        bytesRead = memstrm.Read(buffer, 0, Length);
+    //    }
+
+    //}
 }
