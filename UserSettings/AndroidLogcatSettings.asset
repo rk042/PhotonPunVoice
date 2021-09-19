@@ -1,0 +1,95 @@
+{
+    "m_SelectedDeviceId": "UCYPHIR85DY985PV",
+    "m_SelectedPackage": {
+        "deviceId": "",
+        "name": "",
+        "processId": 0,
+        "exited": false
+    },
+    "m_SelectedPriority": 0,
+    "m_KnownPackagesForSerialization": [
+        {
+            "deviceId": "UCYPHIR85DY985PV",
+            "name": "com.DefaultCompany.PhotonPunVoice2Test",
+            "processId": 7416,
+            "exited": true
+        },
+        {
+            "deviceId": "UCYPHIR85DY985PV",
+            "name": "com.DefaultCompany.PhotonPunVoice2Test",
+            "processId": 8814,
+            "exited": true
+        },
+        {
+            "deviceId": "UCYPHIR85DY985PV",
+            "name": "com.DefaultCompany.PhotonPunVoice2Test",
+            "processId": 9661,
+            "exited": true
+        },
+        {
+            "deviceId": "UCYPHIR85DY985PV",
+            "name": "com.DefaultCompany.PhotonPunVoice2Test",
+            "processId": 9912,
+            "exited": true
+        },
+        {
+            "deviceId": "UCYPHIR85DY985PV",
+            "name": "com.DefaultCompany.PhotonPunVoice2Test",
+            "processId": 11637,
+            "exited": true
+        }
+    ],
+    "m_Tags": {
+        "m_Entries": [
+            {
+                "m_Name": "Filter by all listed tags",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "No Filter",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "Tag Control...",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "Unity",
+                "m_Selected": true
+            },
+            {
+                "m_Name": "CRASH",
+                "m_Selected": false
+            }
+        ]
+    },
+    "m_MemoryViewerState": {
+        "MemoryWindowHeight": 300.0,
+        "MemoryWindowWidth": 170.0,
+        "MemoryTypeEnabled": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "MemoryGroup": 2,
+        "Behavior": 0
+    },
+    "m_Filter": "",
+    "m_FilterIsRegularExpression": false,
+    "m_SymbolPaths": []
+}

@@ -52,7 +52,7 @@
             {
                 if (this.Logger.IsInfoEnabled)
                 {
-                    this.Logger.LogInfo("Remote voice stream removed: Saving wav file.");
+                    this.Logger.LogInfo("Remote voice stream removed: Saving wav file."+filePath);
                 }
                 waveWriter.Dispose();
             };

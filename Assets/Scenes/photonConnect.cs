@@ -5,6 +5,10 @@ using Photon.Pun;
 using Photon.Realtime;
 using Photon.Voice.Unity;
 using UnityEngine.UI;
+using System.IO;
+using UnityEngine.Networking;
+using System.IO.Compression;
+
 //using Photon.Voice.Unity.UtilityScripts;
 /* this project is under devloping but you use push to talk feature for this project,
  * i am student i do not use for com. perpose.
@@ -21,7 +25,8 @@ public class photonConnect : MonoBehaviourPunCallbacks
 
     private VoiceConnection voiceConnection;
     [SerializeField] private AudioClip audioClipLocal;
-    //public SaveOutgoingStreamToFile saveIncoming;
+      
+    private byte[] bytes;
 
     private void Awake()
     {
@@ -30,8 +35,57 @@ public class photonConnect : MonoBehaviourPunCallbacks
 
         //get voice connection object
         voiceConnection = GetComponent<VoiceConnection>();
+
+        saveAudioIntoFile(callback);
         
     }
+
+    private void callback(int i)
+    {
+        if (i == 1)
+        {
+            Debug.Log("song is saving..");
+
+            //first crate directory other wash you get error
+            Directory.CreateDirectory(Application.persistentDataPath + "/saveAudio/");
+
+            string path = Application.persistentDataPath + "/saveAudio/" + "SaveAudioByte" + ".mp3";
+
+            if (!File.Exists(path))
+            {
+                File.WriteAllBytes(path, bytes);
+            }
+        }
+    }
+
+    private void saveAudioIntoFile(System.Action<int> action)
+    {
+        //first crate directory other wash you get error
+        Directory.CreateDirectory(Application.persistentDataPath + "/saveAudio/");
+        string path;
+
+        path =Path.Combine(Application.persistentDataPath,Application.persistentDataPath + "/out_2021-09-19_09-14-04-1111_370.wav");
+
+        //#if UNITY_EDITOR
+        //        //path of file with file extantion name.
+        //        path = Application.persistentDataPath + "/saveAudio/" + "LoadAudio" + ".mp3";
+        //#else
+        //        path="file:///"+Application.persistentDataPath + "/saveAudio/" + "LoadAudio" + ".mp3";
+        //#endif
+        if (File.Exists(path))
+        {
+            bytes = File.ReadAllBytes(path);
+
+            Debug.Log("read complete");
+            action(1);
+        }
+        else
+        {
+            Debug.Log("file not exists "+path);
+            action(0);
+        }
+    }
+
 
     public void btn_JoinRoom()
     {
@@ -73,6 +127,16 @@ public class photonConnect : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinLobby();
     }
 
+    public override void OnJoinedRoom()
+    {
+        Debug.Log("joined room "+PhotonNetwork.CurrentRoom.Name);
+
+        if (PhotonNetwork.CurrentRoom.PlayerCount==2)
+        {
+            Debug.LogError("both players in same room");
+        }
+    }
+
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         foreach (var item in roomList)
@@ -108,48 +172,95 @@ public class photonConnect : MonoBehaviourPunCallbacks
     /// </summary>
     public void btn_playerSound()
     {
-        //GetComponent<AudioSource>().PlayOneShot(audioClipLocal);
+        Debug.Log("rpc button called");
 
-        //SaveIncomingStreamToFile saveIncomingStreamToFile = new SaveIncomingStreamToFile;        
+        //photonView.RPC("RPC_sendbyteData", RpcTarget.All, bytes);               
+
+        Debug.Log("Length - "+bytes.Length);
+
+        photonView.RPC("RPC_Test", RpcTarget.All, bytes);
+    }
+   
+    [PunRPC]
+    private void RPC_sendbyteData(byte[] by)
+    {
+        Debug.Log("RPC_sendbyteData called");
+
+        //first crate directory other wash you get error
+        Directory.CreateDirectory(Application.persistentDataPath + "/PhotonSendData/");
+        string path;
+        path = Path.Combine(Application.persistentDataPath, path = Application.persistentDataPath + "/PhotonSendData/" + "SaveAudioByte" + ".mp3");
+        //#if UNITY_EDITOR
+        //        path= Application.persistentDataPath + "/PhotonSendData/" + "SaveAudioByte" + ".mp3";
+        //#else
+        //        path="file:///"+Application.persistentDataPath + "/PhotonSendData/" + "SaveAudioByte" + ".mp3";
+        //#endif
+       
+
+        if (!File.Exists(path))
+        {
+            File.WriteAllBytes(path, by);
+            Debug.Log("file save complete rpc "+path);
+        }
+        else
+        {
+            Debug.Log("file path not existe rpc "+path);
+        }
     }
 
+    [PunRPC]
+    private void RPC_Test(byte[] by)
+    {
+        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+        {
+            Debug.Log("player name is " + PhotonNetwork.PlayerList[i].NickName);
+        }
 
+        //first crate directory other wash you get error
+        Directory.CreateDirectory(Application.persistentDataPath + "/PhotonSendData/");
+        string path;
+        path = Path.Combine(Application.persistentDataPath, path = Application.persistentDataPath + "/PhotonSendData/" + "SaveAudioByte" + ".mp3");
+        //#if UNITY_EDITOR
+        //        path= Application.persistentDataPath + "/PhotonSendData/" + "SaveAudioByte" + ".mp3";
+        //#else
+        //        path="file:///"+Application.persistentDataPath + "/PhotonSendData/" + "SaveAudioByte" + ".mp3";
+        //#endif
+        if (!File.Exists(path))
+        {
+            File.WriteAllBytes(path, by);
+            Debug.Log("file save complete rpc " + path);
+        }
+        else
+        {
+            Debug.Log("file path not existe rpc " + path);
+        }
+    }
 
-    //public void SaveAudioStream()
-    //{
+    IEnumerator GetAudioClip(string path)
+    {
+        using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(path, AudioType.MPEG))
+        {
+            yield return www.SendWebRequest();
 
-    //    string filename = "TestWavFile";
+            while (!www.isDone)
+            {
+                Debug.Log("progress "+www.downloadProgress);
+                yield return null;
+            }
+          
+            if (www.result == UnityWebRequest.Result.ConnectionError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                AudioClip myClip = DownloadHandlerAudioClip.GetContent(www);
+            }
+        }
+    }
 
-    //    if (!filename.ToLower().EndsWith(".wav"))
-    //    {
-    //        filename += ".wav";
-    //    }
-
-    //    //var filepath = filename;
-    //    var filepath = Path.Combine(Application.persistentDataPath, filename);
-
-    //    Debug.Log("*** Filepath: " + filepath);
-
-
-    //    // Make sure directory exists
-    //    Directory.CreateDirectory(Path.GetDirectoryName(filepath));
-
-
-    //    FileStream writeStream = new FileStream(filepath, FileMode.Create, FileAccess.Write);
-    //    PhotonVoiceNetwork.Client.OnAudioFrameAction += (playerId, voiceId, frame) => Debug.LogFormat("***** {0} {1} {2}", playerId, voiceId, frame[0]);
-
-    //    //I need to feed the MemoryStream buffer with the Audio data returned from PhotonVoiceNetwork.Client.OnAudioFrameAction
-    //    MemoryStream memstrm = new MemoryStream();
-
-    //    int Length = 256;
-    //    Byte[] buffer = new Byte[Length];
-    //    int bytesRead = memstrm.Read(buffer, 0, Length);
-    //    // write the required bytes
-    //    while (bytesRead > 0)
-    //    {
-    //        writeStream.Write(buffer, 0, bytesRead);
-    //        bytesRead = memstrm.Read(buffer, 0, Length);
-    //    }
-
-    //}
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        Debug.Log("player enter room"+newPlayer.NickName);
+    }   
 }

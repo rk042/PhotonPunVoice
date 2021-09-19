@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AppSettings:
     AppIdRealtime: cd0c8124-a551-45b4-9886-8e487836e02d
+    AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 1ecddaa9-31a8-4eab-881f-93cc86ae0788
     AppVersion: 
     UseNameServer: 1
-    FixedRegion: 
+    FixedRegion: in
     Server: 
     Port: 0
     ProxyServer: 
@@ -37,6 +38,8 @@ MonoBehaviour:
   - ClickRpc
   - DestroyRpc
   - HeresWhy
+  - RPC_sendbyteData
+  - RPC_Test
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

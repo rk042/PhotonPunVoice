@@ -862,7 +862,6 @@ GameObject:
   - component: {fileID: 1276220604}
   - component: {fileID: 1276220603}
   - component: {fileID: 1276220605}
-  - component: {fileID: 1276220607}
   - component: {fileID: 1276220606}
   m_Layer: 0
   m_Name: photon
@@ -1005,15 +1004,15 @@ MonoBehaviour:
   voiceDetectionThreshold: 0.01
   voiceDetectionDelayMs: 500
   unityMicrophoneDevice: 
-  photonMicrophoneDeviceId: -1
+  photonMicrophoneDeviceId: 0
   interestGroup: 0
   debugEchoMode: 0
   reliableMode: 0
   encrypt: 0
   transmitEnabled: 0
-  samplingRate: 24000
-  frameDuration: 20000
-  bitrate: 30000
+  samplingRate: 48000
+  frameDuration: 5000
+  bitrate: 510000
   sourceType: 0
   microphoneType: 0
   audioClip: {fileID: 0}
@@ -1051,7 +1050,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recorder: {fileID: 1276220600}
   _regionText: {fileID: 1637616562}
-  audioClipLocal: {fileID: 0}
+  audioClipLocal: {fileID: 8300000, guid: a592eaaf3c255e2499fd60582b200037, type: 3}
 --- !u!4 &1276220602
 Transform:
   m_ObjectHideFlags: 0
@@ -1119,6 +1118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 697c1cda529a1419782f2a2e3afe37a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DisconnectAfterKeepAlive: 0
   KeepAliveInBackground: 60000
   ApplyDontDestroyOnLoad: 1
   logLevel: 3
@@ -1137,6 +1137,7 @@ MonoBehaviour:
     MaxDelayHard: 1000
   Settings:
     AppIdRealtime: 
+    AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
     AppVersion: 
@@ -1165,23 +1166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e15851e17423014d9155ec2de326e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logLevel: 3
+  logLevel: 5
   ignoreGlobalLogLevel: 0
-  muteLocalSpeaker: 1
---- !u!114 &1276220607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1276220597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfeca74c1df0b9049851206739235387, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  logLevel: 3
-  ignoreGlobalLogLevel: 0
+  muteLocalSpeaker: 0
 --- !u!1 &1502562611
 GameObject:
   m_ObjectHideFlags: 0
@@ -1585,6 +1572,10 @@ PrefabInstance:
     - target: {fileID: 2117935701033126207, guid: 523c26a94a450f341a4b9d8d10125d0e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2952613524539947368, guid: 523c26a94a450f341a4b9d8d10125d0e, type: 3}
+      propertyPath: photonMicrophoneDeviceId
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 523c26a94a450f341a4b9d8d10125d0e, type: 3}
